@@ -138,7 +138,6 @@ const appData = {
       but1.style.display = 'none';
       button.style.display = 'block';
       plus.disabled = false;
-      cloneScreen.style.display = 'none';
       for (let item of inp) {
          item.disabled = false;
       }
