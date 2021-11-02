@@ -56,7 +56,7 @@ const appData = {
          const select = screen.querySelector('select');
          const input = screen.querySelector('input');
          if (select.value === '' || input.value === '') {
-            console.log('Заполни все области экранов');
+            alert('Заполни все области экранов');
             this.isError = true;
          } else {
             this.isError = false;
@@ -147,9 +147,11 @@ const appData = {
       for (let item of che) {
          item.disabled = false;
       }
-
+      for (let i = 1; i < screens.length; i++) {
+         screens[screens.length - i].remove();
+      }
       total.value = '';
-      totalCount.value = '';;
+      totalCount.value = '';
       totalCountOther.value = '';
       fullTotalCount.value = '';
       totalCountRollback.value = '';
@@ -162,6 +164,7 @@ const appData = {
       for (let item of che) {
          item.checked = false;
       }
+      appData.init();
    },
    logger: function () {
       console.log(this.fullPrice);
@@ -169,13 +172,16 @@ const appData = {
       console.log(this.screens);
    }
 };
-
 function start() {
    this.addScreens();
    this.addServices();
    this.addPrices();
    //appData.logger();
    this.showResult();
+
+   plus.disabled = true;
+   button.style.display = 'none';
+   but1.style.display = 'block';
 
    for (let item of inp) {
       item.disabled = true;
@@ -186,16 +192,24 @@ function start() {
    for (let item of che) {
       item.disabled = true;
    }
-   plus.disabled = true;
-   button.style.display = 'none';
-   but1.style.display = 'block';
+   function foo() {
+      screens = document.querySelectorAll('.screen');
+      screens.forEach((screen) => {
+         let isError = false;
+         const select = screen.querySelector('select');
+         const input = screen.querySelector('input');
+         if (select.value === '' || input.value === '') {
+            alert('Заполни все области экранов');
+            isError = true;
+         } else {
+            isError = false;
+            select.disabled = true;
+            input.disabled = true;
+         }
+      })
+   };
+   foo();
 }
 const newStart = start.bind(appData);
 
-
 appData.init();
-
-
-//document.querySelector("select").addEventListener("click", function () {
- //  this.disabled = true;
-//});
